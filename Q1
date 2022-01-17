@@ -1,0 +1,178 @@
+#include <iostream>
+using namespace std;
+
+class Node
+{
+public:
+    int data;
+    Node *next;
+
+    Node()
+    {
+        data = 0;
+        next = NULL;
+    }
+
+    Node(int data)
+    {
+        this->data = data;
+        this->next = NULL;
+    }
+};
+
+class LinkedList
+{
+    Node *head;
+
+public:
+    LinkedList()
+    {
+        head = NULL;
+    }
+
+    void insert_at_start(int num)
+    {
+        Node *tem = new Node(num);
+
+        if (head == NULL)
+            head = tem;
+        else
+        {
+            tem->next = head;
+            head = tem;
+        }
+    }
+
+    void remove_from_start()
+    {
+        if (head == NULL)
+            return;
+        Node *tem = new Node();
+        tem = head;
+        head = head->next;
+        free(tem);
+    }
+
+    void insert_at_end(int num)
+    {
+        Node *tem = new Node(num);
+
+        Node *traverse = new Node();
+        traverse = head;
+
+        if (head == NULL)
+            head = tem;
+        else
+        {
+            while (traverse->next != NULL)
+                traverse = traverse->next;
+            traverse->next = tem;
+        }
+    }
+    void remove_from_end()
+    {
+        if (head == NULL)
+            return;
+        Node *tem = new Node();
+        if (head->next == NULL)
+        {
+            tem = head;
+            head = NULL;
+            free(tem);
+        }
+        else
+        {
+            Node *traverse = new Node();
+            traverse = head;
+            while (traverse->next->next != NULL)
+                traverse = traverse->next;
+            tem = traverse->next;
+            traverse->next = NULL;
+            free(tem);
+        }
+    }
+    int front()
+    {
+        if (head == NULL)
+            return -9999;
+        return head->data;
+    }
+    int last()
+    {
+        if (head == NULL)
+            return -9999;
+        Node *traverse = new Node();
+        traverse = head;
+        while (traverse->next != NULL)
+            traverse = traverse->next;
+        return traverse->data;
+    }
+    void traverse()
+    {
+        if (head == NULL)
+            return;
+        Node *temp = new Node();
+        temp = head;
+        while (temp != NULL)
+        {
+            cout << temp->data << "\n";
+            temp = temp->next;
+        }
+    }
+};
+
+class Stack : public LinkedList
+{
+    LinkedList *head;
+
+public:
+    Stack()
+    {
+        head = NULL;
+    }
+    void push(int num)
+    {
+        insert_at_start(num);
+    }
+    void pop()
+    {
+        remove_from_start();
+    }
+    int top()
+    {
+        return front();
+    }
+};
+class Queue : public LinkedList
+{
+    LinkedList *head;
+
+public:
+    Queue()
+    {
+        head = NULL;
+    }
+    void push(int num)
+    {
+        insert_at_end(num);
+    }
+    void pop()
+    {
+        remove_from_start();
+    }
+    int front()
+    {
+        return front();
+    }
+};
+
+int main()
+{
+    Stack obj;
+    obj.push(3);
+    obj.push(2);
+    cout << obj.top() << "\n";
+    obj.pop();
+    cout << obj.top() << "\n";
+    return 0;
+}
